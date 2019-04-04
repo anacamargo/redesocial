@@ -1,4 +1,3 @@
-// Initialize Firebase
 var config = {
     apiKey: "AIzaSyC1hplGRsbQ75entA5YAM3De7q4gVzJ_h0",
     authDomain: "redesocial-db.firebaseapp.com",

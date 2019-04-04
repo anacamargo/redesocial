@@ -8,6 +8,7 @@
    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
    <link rel="stylesheet" href="css/style.css">
    <script src="/__/firebase/5.9.1/firebase-app.js"></script>
+   <script src="/__/firebase/5.8.4/firebase-auth.js"></script>
    <script src="/__/firebase/5.9.1/firebase-database.js"></script>
 </head>
 
@@ -21,7 +22,7 @@
                                 <ul>
                                     <li><a href="">Home</a></li>
                                     <li><a href="">Perfil</a></li>
-                                    <li><a href="">Sair</a></li>
+                                    <li><a href="" id="logout">Sair</a></li>
                                 </ul>
                             </nav>
                         </header>
@@ -32,10 +33,15 @@
                             <section>
                                 <textarea name="post" id="text-area" type="text" required placeholder="Digite seu post" cols="30"
                                     rows="5"></textarea>
-                                <button id="btn-share" type="button">Compartilhar</button>                              
+                                <button id="btn-share" type="button">Compartilhar</button>     
+                                <select id="visibility">
+                                    <option value="public">Público</option>
+                                    <option value="private">Privado</option>
+                                </select> 
+                                                        
                             </section>
                             <section>
-                                <ul id="list"> </ul>
+                                <ul id="list" class="list-unstyled"> </ul>
                             </section>
                         </main>
                     </div>
@@ -53,7 +59,7 @@
    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-   <script src="js/script.js"></script>
+   <script src="js/firebase-config.js"></script>
    <script src="js/timeline.js"></script>
 </body>
 

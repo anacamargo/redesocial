@@ -1,30 +1,85 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <title>teste</title>
+    <title>Pet Lovers</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+        integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
     <link rel="stylesheet" href="css/style.css">
     <script src="/__/firebase/5.8.4/firebase-app.js"></script>
     <script src="/__/firebase/5.8.4/firebase-auth.js"></script>
+    <script src="/__/firebase/5.8.4/firebase-database.js"></script>
+    <script src="js/firebase-config.js"></script>
 </head>
 
 <body>
-    <input type="email" id="email" placeholder="E-mail">
-    <input type="password" id="password" placeholder="Senha">
+    <section class="w-100 section-sign-up hidden">
+        <nav class="nav-bar">
+            <img class="logo" src="" alt="Logo Conectadas" />
+        </nav>
+        <form id="#sign-up" class="form-sign-up">
+            <fieldset>
+                <legend class="legend-text">Prencha com seus dados</legend>
+                <label>Nome do Pet</label>
+                <input type="text" class="sign-up-name" />
+                <label>Nome do Responsável</label>
+                <input type="text" class="sign-up-nameOwner" />
+                <label>E-mail</label>
+                <input type="text" class="sign-up-email" />
+                <label>Senha</label>
+                <input type="password" class="sign-up-password" />
+                <label>Enviar Foto</label>
+                <input type="file" id="photo">
+            </fieldset>
+            <button type="button" class="sign-up-button button">Cadastrar</button>
+            <p class="info">*todos os campos são obrigatórios</p>
+            </div>
+        </form>
+    </section>
+    <section id="sign-in" class="w-100 section-sign-in row">
+        <div class="col-lg-8 d-none d-lg-block d-xl-block text-center">
+            <img src="images/bg.png" class="float-right doggo-pic">
+            <h1 class="pet-brand">Pet L<i class="fas fa-paw"></i>vers</h1>
+        </div>
+        <div class="login-container col-lg-4 col-xl-4 col-sm-12 col-md-12 p-5 mt-5">
+            <div class="text-center">
+                <h1 class="d-block d-lg-none d-xl-none">Pet L<i class="fas fa-paw"></i>vers</h1>
+                <h4 class="legend-text">Faça seu login</h4>
+            </div>
+            <form class="form-sign-in">
+                <div class="form-group input-group mb-3">
+                    <div class="input-group-append">
+                        <span class="input-group-text"><i class="fas fa-user"></i></span>
+                    </div>
+                    <input type="text" class="sign-in-email form-control input-user" placeholder="E-mail" />
+                </div>
+                <div class="form-group input-group mb-3">
+                    <div class="input-group-append">
+                        <span class="input-group-text"><i class="fas fa-key"></i></span>
+                    </div>
+                    <input type="password" class="sign-in-password form-control input-pass" placeholder="Senha" />
+                </div>
+                <button type="button" class="btn btn-dark btn-lg btn-block sign-in-button">Entrar</button>
+                <div class="d-flex justify-content-center mt-2">
+                    <span class="register">Você não tem uma conta? <a href="#sign-up">Cadastre-se</a></span>
+                </div>
+            </form>
+        </div>
+    </section>
 
-    <button id="login">Entrar</button>
-    <button id="createUser">Inscrever-se</button>
-    <button id="authFacebook">Facebook</button>
-    <button id="logout">Sair</button>
-
-    
-
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-    <script src="js/script.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
     <script src="js/authentication.js"></script>
 </body>
 
