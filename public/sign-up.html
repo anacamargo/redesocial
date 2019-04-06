@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Pet Lovers</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link rel="icon" href="images/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="/__/firebase/5.8.4/firebase-app.js"></script>
+    <script src="/__/firebase/5.8.4/firebase-auth.js"></script>
+    <script src="/__/firebase/5.8.4/firebase-database.js"></script>
+    <script src="js/firebase-config.js"></script>
+</head>
+
+<body>
+    <main id="sign-up" class="w-100 row m-0">
+        <section class="col-lg-4 d-none d-lg-block d-xl-block text-center">
+            <h1 class="pet-brand">Pet L<i class="fas fa-paw"></i>vers</h1>
+        </section>
+        <section class="col-lg-4 d-none d-lg-block d-xl-block text-center">
+            <picture>
+                <img src="images/perfil_2.png" class="doggo-profile">
+            </picture>
+            <input type="file" name="photo"/>
+        </section>
+        <section class="col-lg-4 col-xl-4 col-sm-12 col-md-12 p-5 mt-4">
+            <div class="text-center">
+                <h1 class="d-block d-lg-none d-xl-none">Pet L<i class="fas fa-paw"></i>vers</h1>
+                <h4 class="my-5">Faça seu cadastro</h4>
+            </div>
+            <form class="form-sign-up">    
+                <div class="form-group input-group mb-3">
+                    <div class="input-group-append">
+                        <span class="input-group-text"><i class="paw-colourful fas fa-dog"></i></span>
+                    </div>
+                    <input type="text" class="sign-up-name input-sign-up form-control" placeholder="Nome do Pet" />
+                </div>
+                <div class="form-group input-group mb-3">
+                    <div class="input-group-append">
+                        <span class="input-group-text"><i class="fas fa-user"></i></span>
+                    </div>
+                    <input type="text" class="sign-up-nameOwner input-sign-up form-control" placeholder="Nome do Responsável" />
+                </div>
+                <div class="form-group input-group mb-3">
+                    <div class="input-group-append">
+                        <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                    </div>
+                    <input type="text" class="sign-up-email input-sign-up form-control" placeholder="E-mail" />
+                </div>
+                <div class="form-group input-group mb-3">
+                    <div class="input-group-append">
+                        <span class="input-group-text"><i class="fas fa-key"></i></span>
+                    </div>
+                    <input type="password" class="sign-up-password input-sign-up form-control" placeholder="Senha" />
+                </div>
+                <button type="button" class="btn btn-dark btn-lg btn-block sign-up-button button">Cadastrar</button>
+                <div class="d-flex justify-content-center mt-2">
+                    <span class="info">*todos os campos são obrigatórios</span>
+                </div>
+            </form>
+        </section>
+    </main>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+    <script src="js/authentication.js"></script>
+</body>
+
+</html>

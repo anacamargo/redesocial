@@ -5,7 +5,9 @@
    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
    <title>Timeline</title>
+   <link rel="icon" href="images/favicon.ico" type="image/x-icon">   
    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">   
    <link rel="stylesheet" href="css/style.css">
    <script src="/__/firebase/5.9.1/firebase-app.js"></script>
    <script src="/__/firebase/5.8.4/firebase-auth.js"></script>
@@ -13,46 +15,40 @@
 </head>
 
 <body>
-<div class="container-fluid">
-        <div class="row">
-                <div class="col-sm-4">
-                        <header>
-                            <nav>
-                                <!-- <img src="" alt="logo bicharada"> -->
-                                <ul>
-                                    <li><a href="">Home</a></li>
-                                    <li><a href="">Perfil</a></li>
-                                    <li><a href="" id="logout">Sair</a></li>
-                                </ul>
-                            </nav>
-                        </header>
+    <header>
+        <nav>
+            <ul class="nav nav-tabs">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><i class="fas fa-bars"></i></a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="profile.html">Perfil</a>
+                        <a class="dropdown-item" href="timeline.html">Home</a>
+                        <a class="dropdown-item" id="logout" href="">Sair</a>
                     </div>
-                    <div class="col-sm-4">
-            
-                        <main>
-                            <section>
-                                <textarea name="post" id="text-area" type="text" required placeholder="Digite seu post" cols="30"
-                                    rows="5"></textarea>
-                                <button id="btn-share" type="button">Compartilhar</button>     
-                                <select id="visibility">
-                                    <option value="public">Público</option>
-                                    <option value="private">Privado</option>
-                                </select> 
-                                                        
-                            </section>
-                            <section>
-                                <ul id="list" class="list-unstyled"> </ul>
-                            </section>
-                        </main>
-                    </div>
-                    <div class="col-sm-4">
-                        <!-- <h6>col 3</h6> -->
-                        <!-- <p>Os elementos básicos necessários para construir uma página com Web Design Responsivo são ao menos os três
-                            a seguir: Uma estrutura flexível, baseada em Grid System. Imagens e múltimídia flexíveis.</p> -->
-                    </div>
-        </div>
-        
-    </div>
+                </li>
+            </ul>
+        </nav>
+    </header>
+    <main class="row">
+        <aside class="col-sm-4 text-center">
+            <img class="rounded-circle" width="100" src="images/perfil_2.png"/>
+            <p>Chan</p>           
+        </aside>
+        <section class="col-sm-8">
+            <section>
+                <textarea id="text-area" type="text" placeholder="Digite seu post" rows="5"></textarea>
+                <button id="btn-share" type="button" disabled="disabled">Compartilhar</button>     
+                <select id="visibility">
+                    <option value="public">Público</option>
+                    <option value="private">Privado</option>
+                </select> 
+            </section>    
+            <article>
+                <ul id="posts" class="list-unstyled">
+                </ul>
+            </article>
+        </section>
+    </main>
   
 
 
@@ -60,6 +56,7 @@
    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
    <script src="js/firebase-config.js"></script>
+   <script src="js/Repository.js"></script>
    <script src="js/timeline.js"></script>
 </body>
 
