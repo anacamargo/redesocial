@@ -2,59 +2,78 @@
 <html lang="en">
 
 <head>
-   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-   <title>Timeline</title>
-   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-   <link rel="stylesheet" href="css/style.css">
-   <script src="/__/firebase/5.9.1/firebase-app.js"></script>
-   <script src="/__/firebase/5.9.1/firebase-database.js"></script>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<link rel="shortcut icon" href="favicon.ico" type="image/icon" />
+	<title>Timeline</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+		integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<script src="/__/firebase/5.9.1/firebase-app.js"></script>
+	<script src="/__/firebase/5.9.1/firebase-database.js"></script>
+	<link href="css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="css/style.css">
+
 </head>
 
+
+
+
 <body>
-<div class="container-fluid">
-        <div class="row">
-                <div class="col-sm-4">
-                        <header>
-                            <nav>
-                                <!-- <img src="" alt="logo bicharada"> -->
-                                <ul>
-                                    <li><a href="">Home</a></li>
-                                    <li><a href="">Perfil</a></li>
-                                    <li><a href="">Sair</a></li>
-                                </ul>
-                            </nav>
-                        </header>
-                    </div>
-                    <div class="col-sm-4">
-            
-                        <main>
-                            <section>
-                                <textarea name="post" id="text-area" type="text" required placeholder="Digite seu post" cols="30"
-                                    rows="5"></textarea>
-                                <button id="btn-share" type="button">Compartilhar</button>                              
-                            </section>
-                            <section>
-                                <ul id="list"> </ul>
-                            </section>
-                        </main>
-                    </div>
-                    <div class="col-sm-4">
-                        <!-- <h6>col 3</h6> -->
-                        <!-- <p>Os elementos básicos necessários para construir uma página com Web Design Responsivo são ao menos os três
-                            a seguir: Uma estrutura flexível, baseada em Grid System. Imagens e múltimídia flexíveis.</p> -->
-                    </div>
-        </div>
-        
-    </div>
-  
+	<div class="container-fluid">
+		<div class="row">
+			<header class="col-12">
+				<nav>
+					<img src="images/bicharada2" alt="logo bicharada">
+					<ul>
+						<li><a href="">Home</a></li>
+						<li><a href="">Perfil</a></li>
+						<li><a href="">Sair</a></li>
+					</ul>
+				</nav>
+			</header>
+		</div>
+
+		<div class="row">
+			<nav class="col-md-3">
+			</nav>
+
+			<main class="col-md-6">
+				<section>
+					<textarea name="post" id="text-area" type="text" required placeholder="Digite seu post" cols="30"
+						rows="5"></textarea>
+					<button id="btn-share" type="button">Compartilhar</button>
+				</section>
+				<section>
+					<ul id="list"> </ul>
+				</section>
+			</main>
+
+			<aside role="complementary" class="col-md-3">
+			</aside>
+		</div>
+
+		<div class="row">
+			<footer class="col-12">
+				<P>RODAPÉ</P>
+			</footer>
+		</div>
+
+	</div>
 
 
-   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-   <script src="js/script.js"></script>
-   <script src="js/timeline.js"></script>
+
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+		integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+		crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+		integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+		crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+		integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+		crossorigin="anonymous"></script>
+	<script src="js/script.js"></script>
+	<script src="js/timeline.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </body>
 
 </html>

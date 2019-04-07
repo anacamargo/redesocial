@@ -1,0 +1,65 @@
+body {
+    background-color: #f1dcf3;
+}
+
+.h7 {
+    font-size: 0.8rem;
+}
+
+.gedf-wrapper {
+    margin-top: 0.97rem;
+}
+
+
+@media (min-width: 992px) {
+    .gedf-main {
+        padding-left: 4rem;
+        padding-right: 4rem;
+    }
+  
+}
+
+.copyright {
+    font-size: 0.8rem;
+    margin: 1rem 0rem;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+    height: 1rem;
+    color: gray;
+    padding-top: 1rem;
+
+
+}
+
+.btn-pet {
+    color: #fff;
+    background-color: #502763;
+    border-color: #502763;
+  }
+  
+  .btn-pet:hover {
+    color: #fff;
+    background-color: #9055ac;
+    border-color: #9055ac;
+  }
+
+ .fas, .fa, .far {
+     color: #502763;
+     margin-top: 0.5rem;
+}
+
+a {
+    color: #502763;
+}
+
+a:hover {
+    color: #9055ac;
+}
+
+.btn-link-pet {
+    font-weight: 400;
+    color: #502763;
+    background-color: transparent;
+
+}
