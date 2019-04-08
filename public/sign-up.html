@@ -17,18 +17,12 @@
 
 <body>
     <main id="sign-up" class="w-100 row m-0">
-        <section class="col-lg-4 d-none d-lg-block d-xl-block text-center">
-            <h1 class="pet-brand">Pet L<i class="fas fa-paw"></i>vers</h1>
+        <section class="col-lg-6 d-none d-lg-block d-xl-block text-center">
+            <h1 class="pet-brand"><a href="sign-in.html">Pet L<i class="fas fa-paw"></i>vers</a></h1>
         </section>
-        <section class="col-lg-4 d-none d-lg-block d-xl-block text-center">
-            <picture>
-                <img src="images/perfil_2.png" class="doggo-profile">
-            </picture>
-            <input type="file" name="photo"/>
-        </section>
-        <section class="col-lg-4 col-xl-4 col-sm-12 col-md-12 p-5 mt-4">
+        <section class="col-lg-6 col-xl-6 col-sm-12 col-md-12 p-5 mt-4">
             <div class="text-center">
-                <h1 class="d-block d-lg-none d-xl-none">Pet L<i class="fas fa-paw"></i>vers</h1>
+                <h1 class="d-block d-lg-none d-xl-none">Pet L<i class="paw-colourful fas fa-paw"></i>vers</h1>
                 <h4 class="my-5">Faça seu cadastro</h4>
             </div>
             <form class="form-sign-up">    
@@ -36,13 +30,32 @@
                     <div class="input-group-append">
                         <span class="input-group-text"><i class="paw-colourful fas fa-dog"></i></span>
                     </div>
-                    <input type="text" class="sign-up-name input-sign-up form-control" placeholder="Nome do Pet" />
+                    <input type="text" class="sign-up-petName input-sign-up form-control" placeholder="Nome do Pet" />
+                </div>
+                <div class="form-group input-group mb-3">
+                    <div class="input-group-append">
+                        <span class="input-group-text"><i class="fas fa-birthday-cake"></i></span>
+                    </div>
+                    <input id="date" type="date" class="sign-up-birthday input-sign-up form-control" placeholder="Aniversário" />
+                </div>
+                <div class="form-group input-group mb-3">
+                    <div class="input-group-append">
+                        <span class="input-group-text"><i class="fas fa-paw"></i></span>
+                    </div>
+                    <select class="sign-up-select input-sign-up form-control">
+                        <option value="cachorro">Cachorro</option>
+                        <option value="gato">Gato</option>
+                        <option value="ave">Ave</option>
+                        <option value="peixe">Peixe</option>
+                        <option value="reptil">Réptil</option>
+                        <option value="roedor">Roedor</option>
+                    </select>
                 </div>
                 <div class="form-group input-group mb-3">
                     <div class="input-group-append">
                         <span class="input-group-text"><i class="fas fa-user"></i></span>
                     </div>
-                    <input type="text" class="sign-up-nameOwner input-sign-up form-control" placeholder="Nome do Responsável" />
+                    <input type="text" class="sign-up-ownerName input-sign-up form-control" placeholder="Nome do Responsável" />
                 </div>
                 <div class="form-group input-group mb-3">
                     <div class="input-group-append">

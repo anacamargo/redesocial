@@ -1,10 +1,18 @@
 class Repository{
-    constructor(database){
+    constructor(database, userID){
         this.database = database;
+        this.userID = userID;
+    }
+
+    async getUserById(id){
+        const ref = database.ref("users/" + USER_ID);
+        const snap = await ref.once('value');
+        const user = snap.val();
+        return user;
     }
 
     async getPostsByUserId(userId){
-        const ref = database.ref("posts/" + USER_ID)
+        const ref = database.ref("posts/" + USER_ID);
         const snaps = await ref.once('value');
         let posts = [];
         snaps.forEach((child) => {
@@ -32,7 +40,11 @@ class Repository{
         return message.key;
     }
 
-    removePost(id){
+    deletePost(id){
         this.database.ref("posts/" + USER_ID + "/" + id).remove();
+    }
+
+    updatePost(id, newPost){
+        this.database.ref("posts/" + USER_ID + "/" + id).update(newPost);
     }
 }

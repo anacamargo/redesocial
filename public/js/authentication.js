@@ -8,12 +8,14 @@ $(document).ready(function () {
 function signUpClick(event) {
     event.preventDefault();
 
-    let namePet = $(".sign-up-name").val();
-    let nameOwner = $(".sign-up-nameOwner").val();
+    let petName = $(".sign-up-petName").val();
+    let birthday = $(".sign-up-birthday").val();
+    let species = $(".sign-up-select option:selected").val();
+    let ownerName = $(".sign-up-ownerName").val();
     let email = $(".sign-up-email").val();
     let password = $(".sign-up-password").val();
 
-    createUser(namePet, nameOwner, email, password);
+    createUser(petName, birthday, species, ownerName, email, password);
 }
 
 function signInClick(event) {
@@ -25,13 +27,13 @@ function signInClick(event) {
     loginUserAuth(email, password);
 }
 
-function createUser(namePet, nameOwner, email, password) {
+function createUser(petName, birthday, species, ownerName, email, password) {
     firebase.auth().createUserWithEmailAndPassword(email, password)
         .then(function (response) {
             if (response.operationType === "signIn") {
                 var userId = response.user.uid;
 
-                createUserInDB(userId, namePet, nameOwner, email);
+                createUserInDB(userId, petName, birthday, species, ownerName, email);
                 signInRedirect(userId);
             }
         })
@@ -50,16 +52,19 @@ function loginUserAuth(email, password) {
         .catch(function (error) { handleError(error); });
 }
 
-function createUserInDB(id, namePet, nameOwner, email) {
+function createUserInDB(id, petName, birthday, species, ownerName, email) {
     database.ref('users/' + id).set({
-        namePet: namePet,
-        nameOwner: nameOwner,
-        email: email
+        petName: petName,
+        birthday: birthday,
+        species: species,
+        ownerName: ownerName,
+        email: email,
+        picture: 'images/perfil_2.png'
     });
 }
 
 function signInRedirect(userId) {
-    window.location = '../timeline.html?userId=' + userId;
+    window.location = '../home.html?userId=' + userId;
 }
 
 function handleError(error) {
