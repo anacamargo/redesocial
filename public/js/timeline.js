@@ -6,6 +6,7 @@ if(!USER_ID) window.location.href = "sign-in.html";
 $(document).ready(async function () {
     $('#logout').click(logout);
     toggleShareButton();
+    $(".profile-btn").click(profile);
     
     const db = new Repository(database);
     const user = await db.getUserById(USER_ID);
@@ -201,4 +202,9 @@ async function createPost(){
     $('#posts').prepend(postToHtml(user, post));
     
     $('#text-area').val('');
+}
+
+function profile() {
+    database.ref("/profile/" + USER_ID + "/")
+    window.location = "profile.html?id=" + USER_ID;
 }
