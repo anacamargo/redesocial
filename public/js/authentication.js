@@ -64,7 +64,7 @@ function createUserInDB(id, petName, birthday, species, ownerName, email) {
 }
 
 function signInRedirect(userId) {
-    window.location = '../home.html?userId=' + userId;
+    window.location = '../home.html';
 }
 
 function handleError(error) {

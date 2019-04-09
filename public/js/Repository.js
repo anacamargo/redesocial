@@ -5,14 +5,14 @@ class Repository{
     }
 
     async getUserById(id){
-        const ref = database.ref("users/" + USER_ID);
+        const ref = database.ref("users/" + id);
         const snap = await ref.once('value');
         const user = snap.val();
         return user;
     }
 
     async getPostsByUserId(userId){
-        const ref = database.ref("posts/" + USER_ID);
+        const ref = database.ref("posts/" + userId);
         const snaps = await ref.once('value');
         let posts = [];
         snaps.forEach((child) => {
@@ -40,11 +40,15 @@ class Repository{
         return message.key;
     }
 
+    insertLikes(postID, petName){
+        this.database.ref('posts/' + USER_ID + '/' + postID + '/likes').push(petName);
+    }
+
     deletePost(id){
-        this.database.ref("posts/" + USER_ID + "/" + id).remove();
+        this.database.ref('posts/' + USER_ID + '/' + id).remove();
     }
 
     updatePost(id, newPost){
-        this.database.ref("posts/" + USER_ID + "/" + id).update(newPost);
+        this.database.ref('posts/' + USER_ID + '/' + id).update(newPost);
     }
 }

@@ -1,43 +1,50 @@
 var database = firebase.database();
 
 let USER_ID = sessionStorage["USER_ID"];
-if(!USER_ID) window.location.href = "sign-in.html";
+if (!USER_ID) window.location.href = "sign-in.html";
 
 $(document).ready(async function () {
     $('#logout').click(logout);
     toggleShareButton();
-    
+
     const db = new Repository(database);
     const user = await db.getUserById(USER_ID);
+    
+    friends = user.friends || [];
+
+    for(friendID of friends){
+        const friend = await db.getUserById(friendID);
+        friend['id'] = friendID;
+        const html = friendsToHtml(friend);
+        $('#friends-list').append(html);
+    }
 
     $('[data-profile-pic]').attr('src', user.picture);
     $('[data-profile-petname').html(user.petName);
 
     const posts = await db.getPostsByUserId(USER_ID);
-    
-    //const filteredPosts = posts.filter(x=>x.type.toLowerCase() === 'public');
 
-    for(post of posts){
+    for (post of posts) {
         $('#posts').append(postToHtml(user, post));
     }
 
-    $('#posts').on('click', 'li button[data-delete-post]', function(){
+    $('#posts').on('click', 'li button[data-delete-post]', function () {
         const postID = $(this).data('delete-post');
         deletePost(postID);
     });
-    
-    $('#posts').on('click', 'li button[data-edit-post]', async function(){
+
+    $('#posts').on('click', 'li button[data-edit-post]', async function () {
         const postID = $(this).data('edit-post');
         const action = $(this).data('action');
-        if(action === 'edit'){
+        if (action === 'edit') {
             $(this).data('action', 'save');
             $(this).find('i').removeClass('fa-pencil-alt');
             $(this).find('i').addClass('fa-save');
             editPost(postID);
         }
-        else{
+        else {
             const ok = await savePost(postID);
-            if(ok){
+            if (ok) {
                 $(this).data('action', 'edit');
                 $(this).find('i').removeClass('fa-save');
                 $(this).find('i').addClass('fa-pencil-alt');
@@ -45,7 +52,25 @@ $(document).ready(async function () {
         }
     });
 
-    $('#btn-share').on('click', createPost);
+    $('#btn-publish').on('click', createPost);
+
+    $('#posts').on('click', 'li button[data-like-post]', async function () {
+        const postID = $(this).data('like-post');
+        const action = $(this).data('action');
+
+        if (action === 'like') {
+            const updatedPost = await like(postID);
+            $(this).find('i').removeClass('far').addClass('fas');
+            $(this).parent().find('.likes-counter').text((updatedPost.likes || []).length);
+            $(this).data('action', 'unlike');
+        }
+        else {
+            const updatedPost = await unlike(postID);
+            $(this).find('i').removeClass('fas').addClass('far');
+            $(this).parent().find('.likes-counter').text((updatedPost.likes || []).length);
+            $(this).data('action', 'like');
+        }
+    });
 });
 
 function logout(event) {
@@ -62,7 +87,7 @@ function logout(event) {
         });
 }
 
-function deletePost(postID){
+function deletePost(postID) {
     const db = new Repository(database);
     let confirmation = confirm("Tem certeza que deseja excluir");
     if (confirmation === true) {
@@ -83,22 +108,22 @@ function getDateAsString() {
     return `${hours}:${minutes} - ${day} ${month} ${year}`;
 }
 
-function toggleShareButton(){
-    $('#text-area').keyup(function(){
+function toggleShareButton() {
+    $('#text-area').keyup(function () {
         const str = $('#text-area').val();
-        if(str.length > 0){
-            $('#btn-share').removeAttr('disabled');
+        if (str.length > 0) {
+            $('#btn-publish').removeAttr('disabled');
         }
         else {
-            $('#btn-share').prop('disabled',true);
+            $('#btn-publish').prop('disabled', true);
         }
     });
 }
 
-function editPost(postID){
+function editPost(postID) {
 
-    const displaySelector = '[data-post-message='+postID+']';
-    const editSelector = '[data-post-message-edit='+postID+']';
+    const displaySelector = '[data-post-message=' + postID + ']';
+    const editSelector = '[data-post-message-edit=' + postID + ']';
 
     const desiredHeight = $(displaySelector).css('height');
     $(editSelector).css('height', desiredHeight);
@@ -107,11 +132,11 @@ function editPost(postID){
     $(editSelector).show().focus();
 }
 
-async function savePost(postID){
-    try{
+async function savePost(postID) {
+    try {
         console.log('save');
-        const displaySelector = '[data-post-message='+postID+']';
-        const editSelector = '[data-post-message-edit='+postID+']';
+        const displaySelector = '[data-post-message=' + postID + ']';
+        const editSelector = '[data-post-message-edit=' + postID + ']';
         const message = $(editSelector).val();
 
         const db = new Repository(database);
@@ -125,14 +150,18 @@ async function savePost(postID){
         $(displaySelector).show();
         return true;
     }
-    catch(ex){
-        console.log('erro ao salvar',ex);
+    catch (ex) {
+        console.log('erro ao salvar', ex);
         return false;
     }
 }
 
-function postToHtml(user, post){
-    const template = 
+function postToHtml(user, post) {
+
+    const liked = (post.likes || []).filter(x => x.userID === USER_ID).length > 0;
+    const likes = (post.likes || []).length;
+
+    const template =
         `<li class="row p-2" id="${post.id}">
             <article class="col-12">
                 <div class="row">
@@ -160,30 +189,21 @@ function postToHtml(user, post){
                 <hr>
                 <div class="row text-right">
                     <div class="col-12">
-                        <button type="button"id="like" data-like-post="${post.id}">
-                            <i class="far fa-heart"></i></i>
-                        </button>              
-                        <button type="button"id="like" data-like-post="${post.id}">
-                            <i class="fas fa-heart"></i>
-                        </button>                                                              
-                        <button type="button" id="comment" data-comment-post="${post.id}">
-                            <i class="far fa-comment-alt"></i></i>
-                        </button>
-                        <span id="count-likes"></span>
-                        <button type="button" id="comment" data-comment-post="${post.id}">
-                            <i class="fas fa-comment-alt"></i>
+                        <span class="likes-counter">${likes > 0 ? likes : ''}</span>                                                                           
+                        <button type="button" data-like-post="${post.id}" data-action="${liked ? 'unlike' : 'like'}">
+                            <i class="fa${liked ? 's' : 'r'} fa-heart"></i></i>
                         </button>
                     </div>
                 </div>
             </article>
         </li>`;
-        return template; 
+    return template;
 }
 
-async function createPost(){
+async function createPost() {
     let newPost = $('#text-area').val();
     let visibility = $('#visibility option:selected').val();
-    
+
     const db = new Repository(database);
 
     const newPostId = db.insertPost({
@@ -199,6 +219,37 @@ async function createPost(){
     const user = await db.getUserById(USER_ID);
 
     $('#posts').prepend(postToHtml(user, post));
-    
+
     $('#text-area').val('');
+}
+
+async function like(postID) {
+    const db = new Repository(database);
+    const user = await db.getUserById(USER_ID);
+    const petName = user.petName;
+
+    const post = db.getPostByID(postID);
+    const liker = { userID: USER_ID, name: petName };
+    post.likes = post.likes || [];
+    if (!post.likes.includes(liker)) {
+        post.likes.push(liker);
+        db.updatePost(postID, post);
+    }
+    return post;
+}
+
+async function unlike(postID) {
+    const db = new Repository(database);
+    const post = db.getPostByID(postID);
+    post.likes = (post.likes || []).filter(x=> x.userID !== USER_ID);
+    db.updatePost(postID, post);
+    return post;
+}
+
+function friendsToHtml(friend){
+    let friendTemplate = $('#friends-list').find('template').html();
+    friendTemplate = friendTemplate.replace('{{ID}}', friend.id);
+    friendTemplate = friendTemplate.replace('{{NAME}}', friend.petName);
+    friendTemplate = friendTemplate.replace('{{PIC}}', friend.picture);
+    return friendTemplate;    
 }
