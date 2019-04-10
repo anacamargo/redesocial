@@ -42,14 +42,14 @@
             <section class="col-1 d-none d-lg-block d-xl-block"></section>
             <aside class="col-3 d-none d-lg-block d-xl-block text-center pt-4 with-box">
                 <img class="rounded-circle" width="100" src="images/perfil_2.png" data-profile-pic />
-                <h4 data-profile-petname>Anonimous</h4>
+                <h4 class="text-capitalize" data-profile-petname>Anonimous</h4>
                 <hr>
-                <h3>Amigos</h3>
+                <h6>Amigos</h6>
                 <ul class="list-unstyled" id="friends-list">
                     <template>
                         <li class="d-inline-block m-2" data-friend-id="{{ID}}">
-                            <img class="rounded-circle friend-list-image" src="{{PIC}}" />
-                            <h6>{{NAME}}</h6>
+                            <img class="rounded-circle friend-list-image" src="{{PIC}}" title="{{NAME}}"/>
+                            <!-- <h6>{{NAME}}</h6> -->
                         </li>
                     </template>
                 </ul>

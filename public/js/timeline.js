@@ -9,7 +9,8 @@ $(document).ready(async function () {
 
     const db = new Repository(database);
     const user = await db.getUserById(USER_ID);
-    
+    user['id'] = USER_ID;
+
     friends = user.friends || [];
 
     for(friendID of friends){
@@ -17,15 +18,23 @@ $(document).ready(async function () {
         friend['id'] = friendID;
         const html = friendsToHtml(friend);
         $('#friends-list').append(html);
+
+        const friendPosts = await db.getPostsByUserId(friendID);
+        for (post of friendPosts) {
+            const likes = await db.getLikesByPostID(post.id);
+            console.log("likes: " + likes);
+            $('#posts').append(postToHtml(friend, post, likes));
+        }
     }
 
     $('[data-profile-pic]').attr('src', user.picture);
-    $('[data-profile-petname').html(user.petName);
+    $('[data-profile-petname]').html(user.petName);
 
     const posts = await db.getPostsByUserId(USER_ID);
 
     for (post of posts) {
-        $('#posts').append(postToHtml(user, post));
+        const likes = await db.getLikesByPostID(post.id);
+        $('#posts').append(postToHtml(user, post, likes));
     }
 
     $('#posts').on('click', 'li button[data-delete-post]', function () {
@@ -59,15 +68,15 @@ $(document).ready(async function () {
         const action = $(this).data('action');
 
         if (action === 'like') {
-            const updatedPost = await like(postID);
+            const likes = await like(postID);
             $(this).find('i').removeClass('far').addClass('fas');
-            $(this).parent().find('.likes-counter').text((updatedPost.likes || []).length);
+            $(this).parent().find('.likes-counter').text((likes || []).length);
             $(this).data('action', 'unlike');
         }
         else {
-            const updatedPost = await unlike(postID);
+            const likes = await unlike(postID);
             $(this).find('i').removeClass('fas').addClass('far');
-            $(this).parent().find('.likes-counter').text((updatedPost.likes || []).length);
+            $(this).parent().find('.likes-counter').text((likes || []).length);
             $(this).data('action', 'like');
         }
     });
@@ -140,7 +149,7 @@ async function savePost(postID) {
         const message = $(editSelector).val();
 
         const db = new Repository(database);
-        let post = await db.getPostByID(postID);
+        let post = await db.getPostByID(postID, USER_ID);
         post.message = message;
         db.updatePost(postID, post);
 
@@ -156,10 +165,12 @@ async function savePost(postID) {
     }
 }
 
-function postToHtml(user, post) {
+function postToHtml(user, post, likes) {
 
-    const liked = (post.likes || []).filter(x => x.userID === USER_ID).length > 0;
-    const likes = (post.likes || []).length;
+    const liked = (likes || []).filter(x => x.userID === USER_ID).length > 0;
+    const likeCounter = (likes || []).length;
+
+    console.log({id: post.id, liked, likeCounter})
 
     const template =
         `<li class="row p-2" id="${post.id}">
@@ -172,7 +183,7 @@ function postToHtml(user, post) {
                         <h4>${user.petName || "Anonimous"}</h4>
                         <time>${post.date}</time>
                     </div>
-                    <div class="col-2 text-right mt-2">                    
+                    <div class="col-2 text-right mt-2 ${user.id != USER_ID ? 'd-none' : 'd-block' }">                    
                     <button type="button" data-edit-post="${post.id}" data-action="edit">
                         <i class="fas fa-pencil-alt"></i>
                     </button>              
@@ -189,9 +200,9 @@ function postToHtml(user, post) {
                 <hr>
                 <div class="row text-right">
                     <div class="col-12">
-                        <span class="likes-counter">${likes > 0 ? likes : ''}</span>                                                                           
-                        <button type="button" data-like-post="${post.id}" data-action="${liked ? 'unlike' : 'like'}">
-                            <i class="fa${liked ? 's' : 'r'} fa-heart"></i></i>
+                        <span class="likes-counter">${likeCounter > 0 ? likeCounter : ''}</span>                                                                           
+                        <button class="bg-white shadow-none" type="button" data-like-post-user="${user.id}" data-like-post="${post.id}" data-action="${liked ? 'unlike' : 'like'}">
+                            <i class="bg-white text-danger fa${liked ? 's' : 'r'} fa-heart"></i></i>
                         </button>
                     </div>
                 </div>
@@ -215,10 +226,11 @@ async function createPost() {
 
     });
 
-    const post = await db.getPostByID(newPostId);
+    const post = await db.getPostByID(newPostId,USER_ID);
+    const likes = await db.getLikesByPostID(post.id);
     const user = await db.getUserById(USER_ID);
 
-    $('#posts').prepend(postToHtml(user, post));
+    $('#posts').prepend(postToHtml(user, post, likes));
 
     $('#text-area').val('');
 }
@@ -227,29 +239,35 @@ async function like(postID) {
     const db = new Repository(database);
     const user = await db.getUserById(USER_ID);
     const petName = user.petName;
-
-    const post = db.getPostByID(postID);
     const liker = { userID: USER_ID, name: petName };
-    post.likes = post.likes || [];
-    if (!post.likes.includes(liker)) {
-        post.likes.push(liker);
-        db.updatePost(postID, post);
-    }
-    return post;
+    
+    likes = (await db.getLikesByPostID(postID)) || [];
+    if (!likes.includes(liker)) db.insertLike(postID, liker);
+    
+    return await db.getLikesByPostID(postID);
 }
 
 async function unlike(postID) {
     const db = new Repository(database);
-    const post = db.getPostByID(postID);
-    post.likes = (post.likes || []).filter(x=> x.userID !== USER_ID);
-    db.updatePost(postID, post);
-    return post;
+    const likes = await db.getLikesByPostID(postID);
+    let like = likes.filter(x=> x.userID === USER_ID);
+    if(like.length > 0){
+        like = like[0]
+        db.removeLike(postID, like.id);
+    } 
+
+    return await db.getLikesByPostID(postID);
 }
 
 function friendsToHtml(friend){
+    
+    function replaceAll(str, from, to){
+        return str.split(from).join(to);
+    }
+    
     let friendTemplate = $('#friends-list').find('template').html();
-    friendTemplate = friendTemplate.replace('{{ID}}', friend.id);
-    friendTemplate = friendTemplate.replace('{{NAME}}', friend.petName);
-    friendTemplate = friendTemplate.replace('{{PIC}}', friend.picture);
+    friendTemplate = replaceAll(friendTemplate ,'{{ID}}', friend.id);
+    friendTemplate = replaceAll(friendTemplate ,'{{NAME}}', friend.petName);
+    friendTemplate = replaceAll(friendTemplate ,'{{PIC}}', friend.picture);
     return friendTemplate;    
 }
