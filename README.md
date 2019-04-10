@@ -38,7 +38,7 @@ Para a definição da rede social PetLovers foram respondidas as seguintes pergu
 
 ### Entrevistas com Usuários
 Na entrevista realizada por usuários foi mostrado que 100% gostam de animais mesmo não tendo um bichinho de estimação e que gostariam de ter uma rede social específica para ver memes e compartilhar informações sobre seus pets.
-![Pesquisa](Pesquisa_Rede_Social_Pet.xls)
+![Pesquisa](https://github.com/anacamargo/redesocial/blob/master/Pesquisa_Rede_Social_Pet.xlsx)
 
 
 
