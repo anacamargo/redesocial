@@ -74,7 +74,7 @@ Maria
 
 ### Testes de Usabilidade
 Foi feito um protótipo de baixa fidelidade para a primeira versão do projeto e os testes de usuário deram como satisfatórios para logar e postar.
-![Protótipo](https://marvelapp.com/6g56a2h/screen/54811705)
+[Protótipo](https://marvelapp.com/6g56a2h/screen/54811705)
 
 
 
