@@ -1,55 +1,41 @@
 const database = firebase.database();
 
 let USER_ID = sessionStorage["USER_ID"];
-if(!USER_ID) window.location.href = "sign-in.html";
+if (!USER_ID) window.location.href = "sign-in.html";
 
 $(document).ready(function () {
   database.ref("users/" + USER_ID).once("value")
     .then(function (snapshot) {
       let userInfo = snapshot.val();
-      $(".your-name").text("Nome: " + userInfo.name + " " + userInfo.surname);
+      $(".your-name").text("Nome: " + userInfo.ownerName);
       $(".your-email").text("Email: " + userInfo.email);
+      $(".pet-image").html(userInfo.picture);
+      $(".pet-name").text("Nome: " + userInfo.petName);
+      $(".pet-bday").text("Aniversário: " + userInfo.birthday);
+      $(".pet-species").text("Espécie: " + userInfo.species);
     })
 
   database.ref("users").once("value")
     .then(function (snapshot) {
       snapshot.forEach(function (childSnapshot) {
-        var childKey = childSnapshot.key;
-        var childData = childSnapshot.val();
-        createFriendList(childData.name, childKey)
+        let childKey = childSnapshot.key;
+        let childData = childSnapshot.val();
+        createFriendList(childData.petName, childKey)
       });
     })
 
   $(".sign-out-btn").click(signOut);
   $(".timeline-btn").click(timeline);
-  $(".save-btn").click(saveAtDB);
 })
 
 function signOut() {
   database.signOut;
-  window.location = "index.html"
+  window.location = "sign-in.html"
 }
 
 function timeline() {
-  database.ref("/timeline/" + USER_ID + "/")
-  window.location = "timeline.html?id=" + USER_ID;
+  window.location = "home.html"
 }
-
-function saveAtDB(event) {
-  event.preventDefault();
-  let petName = $(".pet-name").val();
-  let petType = $(".pet-type").val()
-  let petDescription = $(".pet-description").val()
-  createPet(petName, petType, petDescription);
-}
-
-function createPet(petName, petType, petDescription) {
-  database.ref("/profile/" + USER_ID).set({
-    petName: petName,
-    petType: petType,
-    petDescription: petDescription
-  });
-};
 
 function createFriendList(name, key) {
   if (key !== USER_ID) {
@@ -59,36 +45,10 @@ function createFriendList(name, key) {
     <button data-user-id="${key}">Adicionar</button>
     </li>
     `);
-  } 
-  $(`button[data-user-id="${key}]`).click(function(){
-    database.ref("friends/" + USER_ID).push({
+  }
+  $(`button[data-user-id="${key}"]`).click(function() {
+    database.ref("users/" + USER_ID + "/friends").push({
       friendId: key
     })
   })
-
 }
-
-//    function getPostsFromDB() {
-//     database.ref("/timeline/" + USER_ID).once('value')
-//       .then(function (snapshot) {
-//         snapshot.forEach(function (childSnapshot) {
-//           var childKey = childSnapshot.key;
-//           var childData = childSnapshot.val();
-//           createPostList(childData.text, childKey)
-//         });
-//       });
-//   };
-
-//   function addPosts() {
-//     let newPost = $(".post-input").val();
-//     let postFirebase = addPostsToDB(newPost);
-//     createPostList(newPost, postFirebase.key);
-//     $(".post-input").val("");
-//     $(".post-btn").prop("disabled", true);
-//   };
-
-//   function addPostsToDB(text) {
-//     return database.ref("timeline/" + USER_ID).push({
-//       text: text
-//     });
-//   };
