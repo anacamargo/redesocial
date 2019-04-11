@@ -31,7 +31,7 @@ function createFriendList(user, friends) {
     $(".friends-list").append(`
     <li>
       <span>${user.petName}</span>
-      <button class="${!friendIds.includes(user.id) ? 'd-inline-block' : 'd-none'}" data-add-friend="${user.id}">Adicionar</button>
+      <button class="btn btn-dark ${!friendIds.includes(user.id) ? 'd-inline-block' : 'd-none'}" data-add-friend="${user.id}">Adicionar</button>
     </li>
     `);
   }
