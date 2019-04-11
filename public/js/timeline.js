@@ -4,44 +4,53 @@ let USER_ID = sessionStorage["USER_ID"];
 if (!USER_ID) window.location.href = "sign-in.html";
 
 $(document).ready(async function () {
-    $('#logout').click(logout);
+    $('#logout').on('click', logout);
     toggleShareButton();
 
+
+    //Cria instancia(obj) da classe repositorio que abstrai as operações do firebase 
     const db = new Repository(database);
     const user = await db.getUserById(USER_ID);
-    user['id'] = USER_ID;
 
-    friends = user.friends || [];
+     //Muda a foto e nome do usuario
+    $('[data-profile-pic]').attr('src', user.picture);
+    $('[data-profile-petname]').html(user.petName); 
 
-    for(friendID of friends){
+    //Obtem a lista de ids dos amigos do usuario
+    const friends = await db.getFriendsByUserId(USER_ID);
+    const friendIds = friends.map(x=>x.friendID);
+
+    //pra cada id entre os ids dos amigos obtenho o usuario referente a esse id. E usa a função FriendsToHTML para montar o htmld
+    //de cada amigo
+    for(friendID of friendIds){
         const friend = await db.getUserById(friendID);
-        friend['id'] = friendID;
         const html = friendsToHtml(friend);
         $('#friends-list').append(html);
 
+        // obtem posts dos amigos
         const friendPosts = await db.getPostsByUserId(friendID);
+        //para cada post obtem os likes e usa os postToHTMl para criar html
         for (post of friendPosts) {
             const likes = await db.getLikesByPostID(post.id);
-            console.log("likes: " + likes);
+            //add lista 
             $('#posts').append(postToHtml(friend, post, likes));
         }
     }
 
-    $('[data-profile-pic]').attr('src', user.picture);
-    $('[data-profile-petname]').html(user.petName);
-
+    //Obtem posts do usuario
     const posts = await db.getPostsByUserId(USER_ID);
-
+    //para cada posts obtem os likes e cria o html
     for (post of posts) {
         const likes = await db.getLikesByPostID(post.id);
         $('#posts').append(postToHtml(user, post, likes));
     }
 
+    //ouve evento de clique dos botoes de delete dos posts
     $('#posts').on('click', 'li button[data-delete-post]', function () {
         const postID = $(this).data('delete-post');
         deletePost(postID);
     });
-
+    //ouve evento de clique dos botoes de editar dos posts
     $('#posts').on('click', 'li button[data-edit-post]', async function () {
         const postID = $(this).data('edit-post');
         const action = $(this).data('action');
@@ -118,7 +127,7 @@ function getDateAsString() {
 }
 
 function toggleShareButton() {
-    $('#text-area').keyup(function () {
+    $('#text-area').on('keyup', function () {
         const str = $('#text-area').val();
         if (str.length > 0) {
             $('#btn-publish').removeAttr('disabled');
@@ -130,7 +139,6 @@ function toggleShareButton() {
 }
 
 function editPost(postID) {
-
     const displaySelector = '[data-post-message=' + postID + ']';
     const editSelector = '[data-post-message-edit=' + postID + ']';
 
@@ -143,16 +151,16 @@ function editPost(postID) {
 
 async function savePost(postID) {
     try {
-        console.log('save');
         const displaySelector = '[data-post-message=' + postID + ']';
         const editSelector = '[data-post-message-edit=' + postID + ']';
         const message = $(editSelector).val();
 
+        //pega a nova mensagem e adiciona no banco
         const db = new Repository(database);
         let post = await db.getPostByID(postID, USER_ID);
         post.message = message;
         db.updatePost(postID, post);
-
+        // coloca a nova mensagem no display. Esconde o editor e mostra o display
         $(displaySelector).text(post.message);
 
         $(editSelector).hide();
@@ -166,11 +174,10 @@ async function savePost(postID) {
 }
 
 function postToHtml(user, post, likes) {
-
+    // verifica se tem like ou não
     const liked = (likes || []).filter(x => x.userID === USER_ID).length > 0;
+    // verifica a quantidade de likes
     const likeCounter = (likes || []).length;
-
-    console.log({id: post.id, liked, likeCounter})
 
     const template =
         `<li class="row p-2" id="${post.id}">
@@ -226,6 +233,7 @@ async function createPost() {
 
     });
 
+    //obtem valores do banco e insere no html
     const post = await db.getPostByID(newPostId,USER_ID);
     const likes = await db.getLikesByPostID(post.id);
     const user = await db.getUserById(USER_ID);
@@ -249,16 +257,20 @@ async function like(postID) {
 
 async function unlike(postID) {
     const db = new Repository(database);
+    //obtem todos os likes do post
     const likes = await db.getLikesByPostID(postID);
+    //filtra pelo usuario logado. filtro devolve array
     let like = likes.filter(x=> x.userID === USER_ID);
     if(like.length > 0){
-        like = like[0]
+        // pega o valor que esta no array e remove
+        like = like[0];
         db.removeLike(postID, like.id);
     } 
-
+    // retorna todos os likes do post
     return await db.getLikesByPostID(postID);
 }
 
+//html dos amigos
 function friendsToHtml(friend){
     
     function replaceAll(str, from, to){

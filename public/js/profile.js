@@ -3,52 +3,60 @@ const database = firebase.database();
 let USER_ID = sessionStorage["USER_ID"];
 if (!USER_ID) window.location.href = "sign-in.html";
 
-$(document).ready(function () {
-  database.ref("users/" + USER_ID).once("value")
-    .then(function (snapshot) {
-      let userInfo = snapshot.val();
-      $(".your-name").text("Nome: " + userInfo.ownerName);
-      $(".your-email").text("Email: " + userInfo.email);
-      $(".pet-image").html(userInfo.picture);
-      $(".pet-name").text("Nome: " + userInfo.petName);
-      $(".pet-bday").text("Aniversário: " + userInfo.birthday);
-      $(".pet-species").text("Espécie: " + userInfo.species);
-    })
+$(document).ready(async function () {
 
-  database.ref("users").once("value")
-    .then(function (snapshot) {
-      snapshot.forEach(function (childSnapshot) {
-        let childKey = childSnapshot.key;
-        let childData = childSnapshot.val();
-        createFriendList(childData.petName, childKey)
-      });
-    })
+  const db = new Repository(database);
+  const user = await db.getUserById(USER_ID);
+  const users = await db.getUsers();
+  const friends = await db.getFriendsByUserId(USER_ID);
 
-  $(".sign-out-btn").click(signOut);
-  $(".timeline-btn").click(timeline);
-})
+  const bdayParts = user.birthday.split('-');
 
-function signOut() {
-  database.signOut;
-  window.location = "sign-in.html"
-}
+  $(".your-name").text("Nome: " + user.ownerName);
+  $(".your-email").text("Email: " + user.email);
+  $(".pet-image").html(user.picture);
+  $(".pet-name").text("Nome: " + user.petName);
+  $(".pet-bday").text(`Aniversário: ${bdayParts[2]}/${bdayParts[1]}/${bdayParts[0]}`);
+  $(".pet-species").text("Espécie: " + user.species);
 
-function timeline() {
-  window.location = "home.html"
-}
+  for (friendToBe of users) {
+    createFriendList(friendToBe, friends);
+  }
 
-function createFriendList(name, key) {
-  if (key !== USER_ID) {
+});
+
+function createFriendList(user, friends) {
+  const friendIds = friends.map(x=>x.friendID);
+  if (user.id !== USER_ID) {
     $(".friends-list").append(`
     <li>
-    <span>${name}</span>
-    <button data-user-id="${key}">Adicionar</button>
+      <span>${user.petName}</span>
+      <button class="${!friendIds.includes(user.id) ? 'd-inline-block' : 'd-none'}" data-add-friend="${user.id}">Adicionar</button>
     </li>
     `);
   }
-  $(`button[data-user-id="${key}"]`).click(function() {
-    database.ref("users/" + USER_ID + "/friends").push({
-      friendId: key
-    })
-  })
+}
+
+$('.friends-list').on('click', 'button[data-add-friend]', async function () {
+  const id = $(this).data('add-friend');
+  const db = new Repository(database);
+  const friends = await db.getFriendsByUserId(USER_ID);
+  const friendIds = friends.map(x => x.friendID);
+  if (!friendIds.includes(id)) db.insertFriend(USER_ID, id);
+});
+
+$('#logout').on('click', logout);
+
+function logout(event) {
+  event.preventDefault();
+
+  firebase
+      .auth()
+      .signOut()
+      .then(function () {
+          sessionStorage.clear();
+          window.location = '../sign-in.html';
+      }, function (error) {
+          console.error(error);
+      });
 }
