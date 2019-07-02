@@ -62,6 +62,3 @@ node_modules/
 
 # dotenv environment variables file
 .env
-
-# Firebase config
-public/js/firebase-config.js
