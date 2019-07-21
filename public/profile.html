@@ -17,7 +17,7 @@
 <body>
   <header>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-      <a class="navbar-brand" href="home.html">Pet L<i class="fas fa-paw"></i>vers</a>
+      <a class="navbar-brand" href="index.html">Pet L<i class="fas fa-paw"></i>vers</a>
       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
         data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
         aria-label="Toggle navigation">
@@ -25,43 +25,74 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav w-100 justify-content-end">
-          <li class="nav-item text-right">
-            <a class="nav-link" href="home.html">Timeline</a>
-          </li>
-          <li class="nav-item text-right">
-            <a id="logout" class="nav-link" href="#">Sair</a>
-          </li>
+          <li class="nav-item text-right"><a class="nav-link" href="index.html">Home</a></li>
+          <li class="nav-item text-right"><a id="logout" class="nav-link" href="#">Sair</a></li>
         </ul>
       </div>
     </nav>
   </header>
   <main class="container-fluid">
-
-    <h1>Perfil</h1>
-    <h2>Seus dados</h2>
-    <p class="your-name"></p>
-    <p class="your-email"></p>
-    
-    <h2>Dados do seu pet</h2>
-    <img class="pet-image">
-    <p class="pet-name"></p>
-    <p class="pet-bday"></p>
-    <p class="pet-species"></p>
-    <hr>
-    <h2>Amigos e Sugestão de Amigos</h2>
-    <ul class="friends-list list-unstyled"></ul>
-    
+    <section class="col-lg-12 col-xl-12 col-sm-12 col-md-12 p-3 mt-4">
+      <div class="text-center">
+        <label class="d-flex justify-content-center align-items-end">
+          <div class="profile-image">
+            <img class="pet-image" src= "">
+          </div>
+          <div class="edit-profile-image">
+            <p>EDITAR FOTO</p>
+          </div>
+        </label>
+      </div>
+      <form class="form-profile pt-3">
+        <div class="form-group input-group mb-3">
+          <div class="input-group-append">
+            <span class="input-group-text"><i class="paw-colourful fas fa-dog"></i></span>
+          </div>
+          <input type="text" class="pet-name form-control" placeholder="Nome do Pet"/>
+        </div>
+        <div class="form-group input-group mb-3">
+          <div class="input-group-append">
+            <span class="input-group-text"><i class="fas fa-birthday-cake"></i></span>
+          </div>
+          <input id="date" type="date" class="pet-bday form-control" placeholder="Aniversário" />
+        </div>
+        <div class="form-group input-group mb-3">
+          <div class="input-group-append">
+            <span class="input-group-text"><i class="fas fa-paw"></i></span>
+          </div>
+          <select class=" pet-species form-control">
+            <option value="cachorro">Cachorro</option>
+            <option value="gato">Gato</option>
+            <option value="passaro">Pássaro</option>
+            <option value="peixe">Peixe</option>
+            <option value="porco">Porco</option>
+            <option value="cavalo">Cavalo</option>
+          </select>
+        </div>
+        <div class="form-group input-group mb-3">
+          <div class="input-group-append">
+            <span class="input-group-text"><i class="fas fa-user"></i></span>
+          </div>
+          <input type="text" class="owner-name form-control" placeholder="Nome do Responsável" />
+        </div>
+        <div class="form-group input-group mb-3 rounded">
+          <div class="input-group-append">
+            <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+          </div>
+          <input type="text" class="email form-control" placeholder="E-mail" />
+        </div>
+        <div class="d-flex justify-content-between pt-2">
+          <button id="save" type="button" class="btn btn-dark btn-md rounded">SALVAR</button>
+          <button id="cancel" type="button" class="btn btn-dark btn-md rounded">CANCELAR</button>
+        </div>
+      </form>
+    </section>
   </main>
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-    crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-    crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-    crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
   <script src="js/firebase-config.js"></script>
+  <script src="js/authentication.js"></script>
   <script src="js/Repository.js"></script>
   <script src="js/profile.js"></script>
 </body>

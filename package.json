@@ -1,0 +1,21 @@
+{
+  "name": "redesocial",
+  "version": "1.0.0",
+  "description": "Este projeto foi proposto pela Laboratória durante o bootcamp de 2019.\r O objetivo principal da aprendizagem foi desenvolver uma aplicação web responsiva onde fosse possível ler e gravar dados. \r O projeto foi desenvolvido em JavaScript (ES6+), HTML e CSS, biblioteca jQuery e framework Bootstrap.\r A interface permite fazer login e autenticar e-mail com Firebase, publicar, editar e excluir um post de texto, dar like, exibir um contador de likes e filtrar por público ou amigos.",
+  "main": "index.js",
+  "dependencies": {},
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/anacamargo/redesocial.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/anacamargo/redesocial/issues"
+  },
+  "homepage": "https://github.com/anacamargo/redesocial#readme"
+}
