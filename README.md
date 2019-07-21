@@ -6,7 +6,7 @@ Este projeto foi proposto pela Laboratória durante o bootcamp de 2019.
 
 O objetivo principal da aprendizagem foi desenvolver uma aplicação web responsiva onde fosse possível ler,  gravar e editar dados. 
 
-O projeto foi desenvolvido em HTML, CSS, JavaScript (ES6+), jQuery, Bootstrap e Firebase e o resultado pode ser visto [aqui]().
+O projeto foi desenvolvido em HTML, CSS, JavaScript (ES6+), jQuery, Bootstrap e Firebase e o resultado pode ser visto [aqui](https://redesocial-db.firebaseapp.com).
 
 
 ### Definição do produto
