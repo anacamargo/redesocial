@@ -13,8 +13,7 @@ O projeto foi desenvolvido em HTML, CSS, JavaScript (ES6+), jQuery, Bootstrap e 
 
 #### [História de usuário 1] Usuário deve ter seu perfil (login/senha) para acessar o sistema.
 
-Eu como funcionário do restaurante quero entrar na plataforma e ver apenas a
-tela importante para o meu trabalho.
+Eu como usuário quero entrar na plataforma e ver minha timeline.
 
 * Criar login e senha.
 * Acessar o sistema.
@@ -32,7 +31,7 @@ tela importante para o meu trabalho.
 * Não permitir publicar post sem conteúdo.
 
 
-#### [História de usuário 2] Usuário quer poder adicionar amigos e ver suas publicações.
+#### [História de usuário 3] Usuário quer poder adicionar amigos e ver suas publicações.
 
 * Receber sugestão de amigos.
 * Adicionar amigos.
